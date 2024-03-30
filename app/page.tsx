@@ -7,6 +7,8 @@ export default function Home() {
         <div className="divide-y divide-gray-200 border-2 border-gray-100">
           <ChatCard subData={"gion ..."} />
           <ChatCard subData={"hi man ..."} />
+          <ChatCard subData={"hi man ..."} />
+          <ChatCard subData={"hi man ..."} />
         </div>
 
         <div className="border w-96 flex flex-col items-center overflow-y-auto">
@@ -29,12 +31,12 @@ export default function Home() {
               htmlFor="name"
               className="block text-sm font-semibold invisible"
             >
-              Full Name
+              Message
             </label>
             <input
               type="text"
               id="name"
-              placeholder="full name"
+              placeholder="Message"
               className="w-full border-2 border-blue-600 px-2 py-1 rounded-md outline-none "
             />
           </div>
