@@ -1,47 +1,39 @@
-import ChatCard from "@/components/ChatCard";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <section className="flex gap-5">
-        <div className="divide-y divide-gray-200 border-2 border-gray-100">
-          <ChatCard subData={"gion ..."} />
-          <ChatCard subData={"hi man ..."} />
-          <ChatCard subData={"hi man ..."} />
-          <ChatCard subData={"hi man ..."} />
+    <main className="flex min-h-screen flex-col items-center justify-between p-24 dark:bg-gray-900 bg-cyan-50 dark:text-white">
+      <form className="mx-auto space-y-3 rounded-md border-2 border-green-500 dark:border-gray-700 dark:bg-gray-900 bg-white p-4 text-purple-950 shadow-md w-80">
+        <div className="space-y-1">
+          <label htmlFor="username" className="block text-sm font-semibold">
+            User Name
+          </label>
+          <input
+            type="text"
+            id="username"
+            required
+            placeholder="username"
+            className="border-2 border-gray-300 px-2 py-1 rounded-md outline-none w-full"
+          />
         </div>
-
-        <div className="border w-96 flex flex-col items-center overflow-y-auto">
-          <div className="w-full border-b h-16 ">
-            <ChatCard subData={"Online"} bar={true} />
-          </div>
-          <div className="flex flex-col justify-end  w-full  px-2 py-4 space-y-2 bg-white">
-            <p className="self-end  bg-cyan-700 px-4 py-2 text-white rounded-md">
-              hi
-            </p>
-            <p className="self-end  bg-cyan-700 px-4 py-2 text-white rounded-md">
-              yon negn
-            </p>
-            <p className="bg-gray-200 max-w-max px-4 py-2 text-gray-950 rounded-md ">
-              hello !!
-            </p>
-          </div>
-          <div className="w-full px-2 py-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-semibold invisible"
-            >
-              Message
-            </label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Message"
-              className="w-full border-2 border-blue-600 px-2 py-1 rounded-md outline-none "
-            />
-          </div>
+        <div className="space-y-1">
+          <label htmlFor="password" className="block text-sm font-semibold">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            required
+            placeholder="password"
+            className="border-2 border-gray-300 px-2 py-1 rounded-md w-full "
+          />
         </div>
-      </section>
+        <Link href="/chat">
+          <button className="bg-green-800 px-4 py-2 text-center w-full mt-4 rounded-md text-gray-100 text-lg">
+            Login
+          </button>
+        </Link>
+      </form>
     </main>
   );
 }
