@@ -53,3 +53,23 @@ export const getMessagesApi = async (userId: string) => {
     console.log(e);
   }
 };
+
+export const sendMessageApi = async (userId: string, text: string) => {
+  try {
+    const res = await fetch(
+      new Request(`http://localhost:8080/api/v1/messages/${userId}`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({ text }),
+        headers: { "Content-Type": "application/json" },
+      })
+    );
+    if (res.ok) {
+      const data = await res.json();
+
+      return data.data;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};

@@ -6,11 +6,12 @@ import { getUser, getMessagesApi } from "@/lib/api";
 import { useEffect, useState } from "react";
 import UserStatus from "@/components/UserStatus";
 import ChatHeader from "@/components/ChatHeader";
+import MessageInput from "@/components/MessageInput";
 
 export default function Chat() {
   const [allUser, setAllUser] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [messages, setMessages] = useState<[]>();
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     async function getUsers() {
@@ -39,7 +40,12 @@ export default function Chat() {
         <section className="h-96">
           <UserStatus selectedUser={selectedUser} />
           {selectedUser ? (
-            <ChatBox messages={messages} />
+            <ChatBox messages={messages}>
+              <MessageInput
+                selectedUser={selectedUser}
+                setMessages={setMessages}
+              />
+            </ChatBox>
           ) : (
             <p className="w-96 text-gray-500 h-full flex justify-center py-10 border text-xl">
               Chat ...
