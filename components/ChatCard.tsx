@@ -1,11 +1,12 @@
 import Image from "next/image";
 
-function ChatCard({ subData, bar = false }) {
+function ChatCard({ bar = false, setSelectedUser, user }) {
   return (
     <div
       className={`flex gap-4 px-2 py-2 w-80   ${
         false && "border-l-red-300 border-l-4"
       }`}
+      onClick={() => setSelectedUser(user)}
     >
       <Image
         src="/kelly-sikkema-FqqaJI9OxMI-unsplash.jpg"
@@ -15,13 +16,13 @@ function ChatCard({ subData, bar = false }) {
         className="rounded-md"
       />
       <div>
-        <p className="text-gray-950">Pedro Yonas</p>
-        <p className={`text-gray-800 ${bar && "text-green-500 text-xs"}`}>
+        <p className="text-gray-700 capitalize">{user?.username}</p>
+        <p className={`text-gray-400 ${bar && "text-green-500 text-xs"}`}>
           {bar && (
             <span className="w-2 h-2 rounded-full mr-1 inline-block bg-green-500" />
           )}
 
-          {subData}
+          {"last message ..."}
         </p>
       </div>
     </div>

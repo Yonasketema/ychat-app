@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-function UserStatus() {
+function UserStatus({ selectedUser }) {
   return (
     <div className="h-16 flex gap-3 border p-3">
       <Image
@@ -11,7 +11,9 @@ function UserStatus() {
         className="rounded-md object-center object-cover"
       />
       <div>
-        <p className="font-semibold text-gray-800">YonasK</p>
+        <p className="font-semibold text-gray-700 capitalize">
+          {selectedUser.username}
+        </p>
         <p className={`text-gray-800 ${true && "text-green-500 text-xs"}`}>
           {true && (
             <>
