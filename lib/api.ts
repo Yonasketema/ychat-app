@@ -9,10 +9,11 @@ export const signUp = async (body) => {
         headers: { "Content-Type": "application/json" },
       })
     );
-    // if (res.ok) {
-    //   const data = await res.json();
-    //   console.log(data);
-    // }
+    if (res.ok) {
+      const data = await res.json();
+
+      return data.data;
+    }
   } catch (e) {
     console.log(e);
   }

@@ -3,23 +3,26 @@
 import ChatBox from "@/components/ChatBox";
 import ChatList from "@/components/ChatList";
 import { getUser, getMessagesApi } from "@/lib/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import UserStatus from "@/components/UserStatus";
 import ChatHeader from "@/components/ChatHeader";
 import MessageInput from "@/components/MessageInput";
+import useFetch from "@/lib/useFetch";
+import { useSocket } from "@/context/socketProvider";
+import { useRouter } from "next/navigation";
 
 export default function Chat() {
-  const [allUser, setAllUser] = useState(null);
+  const [isFetching, allUser] = useFetch(getUser);
   const [selectedUser, setSelectedUser] = useState(null);
   const [messages, setMessages] = useState([]);
+  const { authUser } = useSocket();
+  const router = useRouter();
 
   useEffect(() => {
-    async function getUsers() {
-      const users = await getUser();
-      setAllUser(users);
+    if (!authUser) {
+      router.replace("/");
     }
-    getUsers();
-  }, []);
+  });
 
   useEffect(() => {
     async function getMessages() {
@@ -34,7 +37,11 @@ export default function Chat() {
       <section className="flex ">
         <section className="h-96 ">
           <ChatHeader />
-          <ChatList allUser={allUser} setSelectedUser={setSelectedUser} />
+          {isFetching ? (
+            <p>fetching ...</p>
+          ) : (
+            <ChatList allUser={allUser} setSelectedUser={setSelectedUser} />
+          )}
         </section>
 
         <section className="h-96">
