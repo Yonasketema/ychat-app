@@ -2,11 +2,10 @@
 
 import ChatBox from "@/components/ChatBox";
 import ChatList from "@/components/ChatList";
-import { getUser, getMessagesApi } from "@/lib/api";
-import { useEffect, useState, useTransition } from "react";
+import { getUser } from "@/lib/api";
+import { useEffect, useState } from "react";
 import UserStatus from "@/components/UserStatus";
 import ChatHeader from "@/components/ChatHeader";
-import MessageInput from "@/components/MessageInput";
 import useFetch from "@/lib/useFetch";
 import { useSocket } from "@/context/socketProvider";
 import { useRouter } from "next/navigation";
@@ -14,7 +13,6 @@ import { useRouter } from "next/navigation";
 export default function Chat() {
   const [isFetching, allUser] = useFetch(getUser);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [messages, setMessages] = useState([]);
   const { authUser } = useSocket();
   const router = useRouter();
 
@@ -23,14 +21,6 @@ export default function Chat() {
       router.replace("/");
     }
   });
-
-  useEffect(() => {
-    async function getMessages() {
-      const messages = await getMessagesApi(selectedUser?.id as string);
-      setMessages(messages);
-    }
-    getMessages();
-  }, [selectedUser]);
 
   return (
     <main className="flex min-h-screen justify-center py-9">
@@ -47,12 +37,7 @@ export default function Chat() {
         <section className="h-96">
           <UserStatus selectedUser={selectedUser} />
           {selectedUser ? (
-            <ChatBox messages={messages}>
-              <MessageInput
-                selectedUser={selectedUser}
-                setMessages={setMessages}
-              />
-            </ChatBox>
+            <ChatBox selectedUser={selectedUser}></ChatBox>
           ) : (
             <p className="w-96 text-gray-500 h-full flex justify-center py-10 border text-xl">
               Chat ...

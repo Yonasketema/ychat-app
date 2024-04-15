@@ -1,7 +1,33 @@
-import React from "react";
+import { useSocket } from "@/context/socketProvider";
+import { getMessagesApi } from "@/lib/api";
+import React, { useEffect, useState } from "react";
 import MessageInput from "./MessageInput";
 
-function ChatBox({ messages, children }) {
+function ChatBox({ selectedUser }) {
+  const { authUser, socket } = useSocket();
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState();
+
+  useEffect(() => {
+    async function getMessages() {
+      const messages = await getMessagesApi(selectedUser?.id as string);
+      setMessages(messages);
+    }
+    getMessages();
+  }, [selectedUser]);
+
+  useEffect(() => {
+    if (newMessage?.senderId === selectedUser?.id) {
+      setMessages((messages) => [...messages, newMessage]);
+    }
+  }, [newMessage, selectedUser.id]);
+
+  useEffect(() => {
+    socket?.on("newMessage", (message) => {
+      setNewMessage(message);
+    });
+  }, [socket, selectedUser]);
+
   return (
     <section className="h-full flex flex-col justify-between border">
       <div className="border w-96 h-80 flex flex-col items-center justify-center overflow-y-auto">
@@ -10,8 +36,7 @@ function ChatBox({ messages, children }) {
         ) : (
           <div className="flex flex-col justify-end  w-full  px-2 pt-20 space-y-2 bg-white">
             {messages?.map((message) => {
-              return message.senderId ===
-                "348ac677-9e4d-483a-8c6d-a176d14702cf" ? (
+              return message.senderId === authUser?.id ? (
                 <>
                   <p className="self-end  bg-cyan-700 px-4 py-2 text-white rounded-md">
                     {message.text}
@@ -27,7 +52,7 @@ function ChatBox({ messages, children }) {
         )}
       </div>
 
-      {children}
+      <MessageInput selectedUser={selectedUser} setMessages={setMessages} />
     </section>
   );
 }
