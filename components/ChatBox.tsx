@@ -28,7 +28,7 @@ function ChatBox({ selectedUser }) {
 
   useEffect(() => {
     if (newMessage?.senderId === selectedUser?.id) {
-      setMessages((messages) => [...messages, newMessage]);
+      setMessages((messages) => messages && [...messages, newMessage]);
     }
   }, [newMessage, selectedUser.id]);
 
